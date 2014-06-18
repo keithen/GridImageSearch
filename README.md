@@ -2,9 +2,9 @@
 
 Assignment 2 for CodePath Android class
 by Keithen Hayenga
-17 June 2014
+18 June 2014
 
-Hours Spent: 18
+Hours Spent: 24
 
 
 Description:
@@ -17,12 +17,12 @@ User Stories:
 
  * [x] User can enter a search query that will display a grid of image results from the Google Image API.
  * [x] User can click on "settings" which allows selection of advanced search options to filter results
- * [ ] User can configure advanced search filters such as:
+ * [x] User can configure advanced search filters such as:
         Size (small, medium, large, extra-large)
         Color filter (black, blue, brown, gray, green, etc...)
         Type (faces, photo, clip art, line art)
         Site (espn.com)
- * [ ] Subsequent searches will have any filters applied to the search results
+ * [x] Subsequent searches will have any filters applied to the search results
  * [x] User can tap on any image in results to see the image full-screen
  * [x] User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
 
@@ -38,13 +38,6 @@ The following advanced user stories are optional:
 
 
 Status
-
-The screen for options is also started, but i was planning to allow the strings in the spinners to be internationalized. So that means i needed ways to convert the strings necessary for Google API calls to be converted back and forth into indexes to set the spinner starting values. I just didn't eet that done. 
-
-I do know that my search string works from hardwiring colors, sizes, and types in to it.
-
-And i have a crash on return from the options screen. Never had a chance to look at it.
-
 
 
 Installation Instructions:

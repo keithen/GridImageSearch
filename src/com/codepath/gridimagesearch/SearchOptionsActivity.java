@@ -1,9 +1,10 @@
 package com.codepath.gridimagesearch;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,36 +31,49 @@ public class SearchOptionsActivity extends Activity {
 		stOptionSize = getIntent().getStringExtra("optionSize");
 		int i = GridSearchPrefs.getSizeIndex(stOptionSize);
 		spSize = (Spinner) findViewById(R.id.spImageSize);
-//		ArrayAdapter sizeAdap = (ArrayAdapter) spSize.getAdapter();
-//		int spSizePosition = sizeAdap.getPosition(stOptionSize);
-//		spSize.setSelection(spSizePosition);
 		spSize.setSelection(i);
 
 		stOptionColor = getIntent().getStringExtra("optionColor");
 		i = GridSearchPrefs.getColorIndex(stOptionColor);
 		spColor = (Spinner) findViewById(R.id.spColorFilter);
-//		ArrayAdapter colorAdap = (ArrayAdapter) spColor.getAdapter();
-//		int spColorPosition = colorAdap.getPosition(stOptionColor);
-//		spColor.setSelection(spColorPosition);
 		spColor.setSelection(i);
 
 		stOptionType = getIntent().getStringExtra("optionType");
 		i = GridSearchPrefs.getTypeIndex(stOptionType);
 		spType = (Spinner) findViewById(R.id.spImageType);
-//		ArrayAdapter typeAdap = (ArrayAdapter) spType.getAdapter();
-//		int sptypePosition = typeAdap.getPosition(stOptionType);
-//		spSize.setSelection(sptypePosition);
-		spSize.setSelection(i);
+		spType.setSelection(i);
 
 		stOptionDomain = getIntent().getStringExtra("optionDomain");
 		tvDomain = (TextView) findViewById(R.id.etSiteFilter);
 		tvDomain.setText(stOptionDomain);
 	}
 
-	
+
 	public void onSave(View v) {
-		  // closes the activity and returns to first screen
-		  this.finish(); 
-		}
+		// Prepare data intent 
+		Intent data = new Intent();
+
+		int n;
+		String s;
+
+		n = spSize.getSelectedItemPosition();
+		s = GridSearchPrefs.getSizeString(n);
+		data.putExtra("optionSize", s);
+
+		n = spColor.getSelectedItemPosition();
+		s = GridSearchPrefs.getColorString(n);
+		data.putExtra("optionColor", s);
+
+		n = spType.getSelectedItemPosition();
+		s = GridSearchPrefs.getTypeString(n);
+		data.putExtra("optionType", s);
+
+		s = tvDomain.getText().toString();
+		data.putExtra("optionDomain", s);
+
+		// Activity finished ok, return the data
+		setResult(RESULT_OK, data); // set result code and bundle data for response
+		finish(); // closes the activity, pass data to parent
+	}
 
 }
