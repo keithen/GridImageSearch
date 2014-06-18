@@ -34,6 +34,7 @@ public class SearchActivity extends Activity {
 	String stImageSizeOption = "";
 	String stImageColorOption = "";
 	String stImageTypeOption = "";
+	String stImageDomainOption = "";
 	
 
 	@Override
@@ -74,8 +75,6 @@ public class SearchActivity extends Activity {
 		// Deserialize API response and then construct new objects to append to the adapter
 		int iNewStart = (offset - 1) * 8;
 		
-		// CRUDE; I JUST DUPLICATED THE CODE FROM onImageSearch
-
 		String query = etQuery.getText().toString();
 		
 		// Build string we want to search for using a.concat(b)
@@ -92,15 +91,14 @@ public class SearchActivity extends Activity {
 		if ((stImageTypeOption != null) && !(stImageTypeOption.equals("")))
 				stGoogleImageSearch = stGoogleImageSearch.concat("&imgtype=" + stImageTypeOption);
 
+		if ((stImageDomainOption != null) && !(stImageDomainOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&as_sitesearch=" + stImageDomainOption);
+
 		stGoogleImageSearch = stGoogleImageSearch.concat("&v=1.0&q=" + Uri.encode(query));
 
 		Log.d("DEBUG", "scrolling stGoogleImageSearch = " + stGoogleImageSearch);
 		
 		AsyncHttpClient client = new AsyncHttpClient();
-		
-//		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8"
-//				+ "&start" + 0
-//				+ "&v=1.0&q=" + Uri.encode(query),
 		client.get(stGoogleImageSearch,
 				new JsonHttpResponseHandler() {
 					@Override
@@ -109,7 +107,6 @@ public class SearchActivity extends Activity {
 						try {
 							imageJsonResults = response.getJSONObject("responseData").
 									getJSONArray("results");
-//							imageResults.clear();
 							imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
 							Log.d("DEBUG", imageResults.toString());
 							
@@ -130,9 +127,15 @@ public class SearchActivity extends Activity {
 	
 	public void onSettingsAction(MenuItem mi) {
 		Intent i = new Intent(this, SearchOptionsActivity.class);
-		i.putExtra("optionSize", stImageSizeOption); 
-		i.putExtra("optionColor", stImageColorOption); 
-		i.putExtra("optionType", stImageTypeOption);
+//		i.putExtra("optionSize", stImageSizeOption); 
+//		i.putExtra("optionColor", stImageColorOption); 
+//		i.putExtra("optionType", stImageTypeOption);
+//		i.putExtra("optionDomain", stImageDomainOption);
+		// TEST
+		i.putExtra("optionSize", "large"); 
+		i.putExtra("optionColor", "red"); 
+		i.putExtra("optionType", "face");
+		i.putExtra("optionDomain", "yahoo.com");
 
 		startActivity(i);
 	}

@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class SearchOptionsActivity extends Activity {
 	private String stOptionSize;
 	private String stOptionColor;
 	private String stOptionType;
+	private String stOptionDomain;
 	private Spinner spSize;
 	private Spinner spColor;
 	private Spinner spType;
+	private TextView tvDomain;
 
 	/*
 	 * I did not implement listeners for the spinners because we don't operate
@@ -25,30 +28,36 @@ public class SearchOptionsActivity extends Activity {
 		setContentView(R.layout.activity_search_options);
 
 		stOptionSize = getIntent().getStringExtra("optionSize");
+		int i = GridSearchPrefs.getSizeIndex(stOptionSize);
 		spSize = (Spinner) findViewById(R.id.spImageSize);
-		ArrayAdapter sizeAdap = (ArrayAdapter) spSize.getAdapter();
-		int spSizePosition = sizeAdap.getPosition(stOptionSize);
+//		ArrayAdapter sizeAdap = (ArrayAdapter) spSize.getAdapter();
+//		int spSizePosition = sizeAdap.getPosition(stOptionSize);
 //		spSize.setSelection(spSizePosition);
-		spSize.setSelection(spSizePosition);
+		spSize.setSelection(i);
 
 		stOptionColor = getIntent().getStringExtra("optionColor");
+		i = GridSearchPrefs.getColorIndex(stOptionColor);
 		spColor = (Spinner) findViewById(R.id.spColorFilter);
-		ArrayAdapter colorAdap = (ArrayAdapter) spColor.getAdapter();
-		int spColorPosition = colorAdap.getPosition(stOptionColor);
+//		ArrayAdapter colorAdap = (ArrayAdapter) spColor.getAdapter();
+//		int spColorPosition = colorAdap.getPosition(stOptionColor);
 //		spColor.setSelection(spColorPosition);
-		spColor.setSelection(2);
+		spColor.setSelection(i);
 
 		stOptionType = getIntent().getStringExtra("optionType");
+		i = GridSearchPrefs.getTypeIndex(stOptionType);
 		spType = (Spinner) findViewById(R.id.spImageType);
-		ArrayAdapter typeAdap = (ArrayAdapter) spType.getAdapter();
-		int sptypePosition = typeAdap.getPosition(stOptionType);
+//		ArrayAdapter typeAdap = (ArrayAdapter) spType.getAdapter();
+//		int sptypePosition = typeAdap.getPosition(stOptionType);
 //		spSize.setSelection(sptypePosition);
-		spSize.setSelection(2);
+		spSize.setSelection(i);
 
+		stOptionDomain = getIntent().getStringExtra("optionDomain");
+		tvDomain = (TextView) findViewById(R.id.etSiteFilter);
+		tvDomain.setText(stOptionDomain);
 	}
 
 	
-	public void onSSave(View v) {
+	public void onSave(View v) {
 		  // closes the activity and returns to first screen
 		  this.finish(); 
 		}
