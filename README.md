@@ -4,7 +4,7 @@ Assignment 2 for CodePath Android class
 by Keithen Hayenga
 18 June 2014
 
-Hours Spent: 24
+Hours Spent: 25
 
 
 Description:
@@ -36,6 +36,8 @@ The following advanced user stories are optional:
  * [ ] Optional: Use the StaggeredGridView to display visually interesting image results
  * [ ] Optional: User can zoom or pan images displayed in full-screen detail view
 
+Bonus: I did set the option screen up to work even when nationalized. (German language strings not checked in, but can be seen working at bottom of README.)
+
 
 Status
 
@@ -52,7 +54,10 @@ Libraries Used:
 Notes:
 
 Walkthrough of user stories:
+(Options screen internationalized to German below.)
 
 ![Video Walkthrough](ImageSearch.gif)
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+![International Video Walkthrough](GermanImageSearch.gif)
+
+GIFs created with [LiceCap](http://www.cockos.com/licecap/).
