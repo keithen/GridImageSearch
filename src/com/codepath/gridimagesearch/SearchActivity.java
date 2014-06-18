@@ -12,13 +12,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -29,6 +29,11 @@ public class SearchActivity extends Activity {
 	Button btnSearch;
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter;
+	
+	// Options strings must match valid strings for Google API (see GridSearchPrefs).
+	String stImageSizeOption = "";
+	String stImageColorOption = "";
+	String stImageTypeOption = "";
 	
 
 	@Override
@@ -41,7 +46,6 @@ public class SearchActivity extends Activity {
 		gvResults.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
 				Intent i = new Intent(getApplicationContext(), ImageDisplayActivity.class);
 				ImageResult imageResult = imageResults.get(position);
 				i.putExtra("result", imageResult);
@@ -49,30 +53,55 @@ public class SearchActivity extends Activity {
 			}
 			
 		});
+		
+        // Attach the listener to the AdapterView onCreate
+		gvResults.setOnScrollListener(new EndlessScrollListener() {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				// Triggered only when new data needs to be appended to the list
+				// Add whatever code is needed to append new items to your AdapterView
+	        customLoadMoreDataFromApi(page); 
+				// or customLoadMoreDataFromApi(totalItemsCount); 
+			}
+		});
 	}
+		
+		
+	// Append more data into the adapter
+	public void customLoadMoreDataFromApi(int offset) {
+		// This method probably sends out a network request and appends new data items to your adapter. 
+		// Use the offset value and add it as a parameter to your API request to retrieve paginated data.
+		// Deserialize API response and then construct new objects to append to the adapter
+		int iNewStart = (offset - 1) * 8;
+		
+		// CRUDE; I JUST DUPLICATED THE CODE FROM onImageSearch
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.search, menu);
-		return true;
-	}
-	
-	public void setupViews() {
-		etQuery = (EditText) findViewById(R.id.etQuery);
-		gvResults = (GridView) findViewById(R.id.gvResults);
-		btnSearch = (Button) findViewById(R.id.btnSearch);
-	}
-	
-	public void onImageSearch(View v) {
 		String query = etQuery.getText().toString();
-		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT).show();
+		
+		// Build string we want to search for using a.concat(b)
+		// https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=android
+		String stGoogleImageSearch = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8"
+				+ "&start=" + iNewStart;
+
+		if ((stImageSizeOption != null) && !(stImageSizeOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&imgsz=" + stImageSizeOption);
+
+		if ((stImageColorOption != null) && !(stImageColorOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&imgcolor=" + stImageColorOption);
+
+		if ((stImageTypeOption != null) && !(stImageTypeOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&imgtype=" + stImageTypeOption);
+
+		stGoogleImageSearch = stGoogleImageSearch.concat("&v=1.0&q=" + Uri.encode(query));
+
+		Log.d("DEBUG", "scrolling stGoogleImageSearch = " + stGoogleImageSearch);
 		
 		AsyncHttpClient client = new AsyncHttpClient();
-		// https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=android
-		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8"
-				+ "&start" + 0
-				+ "&v=1.0&q=" + Uri.encode(query),
+		
+//		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8"
+//				+ "&start" + 0
+//				+ "&v=1.0&q=" + Uri.encode(query),
+		client.get(stGoogleImageSearch,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONObject response) {
@@ -89,5 +118,84 @@ public class SearchActivity extends Activity {
 						}	
 					}
 		});
+	}	
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.image_display, menu);
+		return true;
+	}
+	
+	public void onSettingsAction(MenuItem mi) {
+		Intent i = new Intent(this, SearchOptionsActivity.class);
+		i.putExtra("optionSize", stImageSizeOption); 
+		i.putExtra("optionColor", stImageColorOption); 
+		i.putExtra("optionType", stImageTypeOption);
+
+		startActivity(i);
+	}
+
+	
+	public void setupViews() {
+		etQuery = (EditText) findViewById(R.id.etQuery);
+		gvResults = (GridView) findViewById(R.id.gvResults);
+		btnSearch = (Button) findViewById(R.id.btnSearch);
+	}
+	
+	public void onImageSearch(View v) {
+		customLoadMoreDataFromApi(1);
+		customLoadMoreDataFromApi(2);
+/*
+		String query = etQuery.getText().toString();
+//		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT).show();
+		
+		// Test
+//		stImageSizeOption = "LARGE";
+//		stImageColorOption = "BLUE";
+//		stImageTypeOption = "PHOTO";
+
+		// Build string we want to search for using a.concat(b)
+		// https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=android
+		String stGoogleImageSearch = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8"
+				+ "&start" + 0;
+
+		if ((stImageSizeOption != null) && !(stImageSizeOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&imgsz=" + stImageSizeOption);
+
+		if ((stImageColorOption != null) && !(stImageColorOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&imgcolor=" + stImageColorOption);
+
+		if ((stImageTypeOption != null) && !(stImageTypeOption.equals("")))
+				stGoogleImageSearch = stGoogleImageSearch.concat("&imgtype=" + stImageTypeOption);
+
+		stGoogleImageSearch = stGoogleImageSearch.concat("&v=1.0&q=" + Uri.encode(query));
+
+		Log.d("DEBUG", "stGoogleImageSearch = " + stGoogleImageSearch);
+		
+		AsyncHttpClient client = new AsyncHttpClient();
+		
+//		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8"
+//				+ "&start" + 0
+//				+ "&v=1.0&q=" + Uri.encode(query),
+		client.get(stGoogleImageSearch,
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(JSONObject response) {
+						JSONArray imageJsonResults = null;
+						try {
+							imageJsonResults = response.getJSONObject("responseData").
+									getJSONArray("results");
+							imageResults.clear();
+							imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
+							Log.d("DEBUG", imageResults.toString());
+							
+						} catch(JSONException e) {
+							e.printStackTrace();
+						}	
+					}
+		});
+*/
 	}
 }
