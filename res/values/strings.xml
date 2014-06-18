@@ -8,43 +8,43 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_search_options">SearchOptionsActivity</string>
-    <string name="search_options">Advanced search options</string>
-    <string name="image_size">Image Size</string>
-    <string name="color_filter">Color Filter</string>
-    <string name="image_type">Image Type</string>
+    <string name="search_options">Erweiterte Suchoptionen</string>
+    <string name="image_size">Größe des Bildes</string>
+    <string name="color_filter">Farbfilter</string>
+    <string name="image_type">Bild-Art</string>
     <string name="site_filter">Site Filter</string>
-    <string name="save_btn_lable">Save</string>
+    <string name="save_btn_lable">sparen</string>
 
 	<string-array name="grid_option_size_array">
-		<item>"Any"</item>
-		<item>"Small"</item>
-		<item>"Medium"</item>
-		<item>"Large"</item>
-		<item>"Extra Large"</item>
+		<item>"Jeder"</item>
+		<item>"klein"</item>
+		<item>"mittlere"</item>
+		<item>"groß"</item>
+		<item>"sehr große"</item>
 	</string-array>
 
 	<string-array name="grid_option_color_array">
-		<item>"Any"</item>
-		<item>"Black"</item>
-		<item>"Blue"</item>
-		<item>"Brown"</item>
-		<item>"Gray"</item>
-		<item>"Green"</item>
+		<item>"Alle"</item>
+		<item>"Schwarz"</item>
+		<item>"Blau"</item>
+		<item>"Braun"</item>
+		<item>"Grau"</item>
+		<item>"Grün"</item>
 		<item>"Orange"</item>
-		<item>"Pink"</item>
-		<item>"Purple"</item>
-		<item>"Red"</item>
+		<item>"Rosa"</item>
+		<item>"Lila"</item>
+		<item>"Rot"</item>
 		<item>"Teal"</item>
-		<item>"White"</item>
-		<item>"Yellow"</item>
+		<item>"Weiß"</item>
+		<item>"Gelb"</item>
 	</string-array>
 	
 	<string-array name="grid_option_type_array">
-		<item>"Any"</item>
-		<item>"Faces"</item>
-		<item>"Photo"</item>
+		<item>"Jeder"</item>
+		<item>"Gesichter"</item>
+		<item>"Fotos"</item>
 		<item>"Clip Art"</item>
-		<item>"Line Art"</item>
+		<item>"Zeichnungen"</item>
 	</string-array>
 	
 </resources>
