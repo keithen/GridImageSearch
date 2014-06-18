@@ -24,7 +24,7 @@ User Stories:
         Site (espn.com)
  * [ ] Subsequent searches will have any filters applied to the search results
  * [x] User can tap on any image in results to see the image full-screen
- * [ ] User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
+ * [x] User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
 
 The following advanced user stories are optional:
 
@@ -39,9 +39,9 @@ The following advanced user stories are optional:
 
 Status
 
-I have the endless scrolling under way, but right now my extra reading of data only covers the original images instead of adding to it. I believe that i don't have enough images on the screen to enable scrolling, so the changes to get more images is never called.
-
 The screen for options is also started, but i was planning to allow the strings in the spinners to be internationalized. So that means i needed ways to convert the strings necessary for Google API calls to be converted back and forth into indexes to set the spinner starting values. I just didn't eet that done. 
+
+I do know that my search string works from hardwiring colors, sizes, and types in to it.
 
 And i have a crash on return from the options screen. Never had a chance to look at it.
 

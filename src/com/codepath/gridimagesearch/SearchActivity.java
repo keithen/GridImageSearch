@@ -109,7 +109,7 @@ public class SearchActivity extends Activity {
 						try {
 							imageJsonResults = response.getJSONObject("responseData").
 									getJSONArray("results");
-							imageResults.clear();
+//							imageResults.clear();
 							imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
 							Log.d("DEBUG", imageResults.toString());
 							
@@ -145,6 +145,7 @@ public class SearchActivity extends Activity {
 	}
 	
 	public void onImageSearch(View v) {
+		imageResults.clear();
 		customLoadMoreDataFromApi(1);
 		customLoadMoreDataFromApi(2);
 /*
